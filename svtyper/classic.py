@@ -413,12 +413,12 @@ def sv_genotype(bam_string,
                         out_bam_written_reads = write_alignment(read, out_bam, out_bam_written_reads)
 
             if debug:
-                print '--------------------------'
-                print 'ref_span:', ref_span
-                print 'alt_span:', alt_span
-                print 'ref_seq:', ref_seq
-                print 'alt_seq:', alt_seq
-                print 'alt_clip:', alt_clip
+                print('--------------------------')
+                print('ref_span:', ref_span)
+                print('alt_span:', alt_span)
+                print('ref_seq:', ref_seq)
+                print('alt_seq:', alt_seq)
+                print('alt_clip:', alt_clip)
 
             # in the absence of evidence for a particular type, ignore the reference
             # support for that type as well
@@ -448,7 +448,7 @@ def sv_genotype(bam_string,
 
                 # print log probabilities of homref, het, homalt
                 if debug:
-                    print gt_lplist
+                    print(gt_lplist)
 
                 # set the overall variant QUAL score and sample specific fields
                 var.genotype(sample.name).set_format('GL', ','.join(['%.0f' % x for x in gt_lplist]))
