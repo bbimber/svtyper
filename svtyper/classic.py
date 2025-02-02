@@ -13,6 +13,10 @@ from svtyper.parsers import Vcf, Variant, Sample, confidence_interval
 from svtyper.utils import *
 from svtyper.statistics import bayes_gt
 
+try:
+    xrange
+except NameError:
+    xrange = range
 # --------------------------------------
 # define functions
 
@@ -126,7 +130,7 @@ def sv_genotype(bam_string,
             bam_list.append(pysam.AlignmentFile(b, mode='rb'))
         elif b.endswith('.cram'):
             bam_list.append(pysam.AlignmentFile(b,
-                mode='rc',reference_filename=ref_fasta,format_options=["required_fields=7167"]))
+                mode='rc',reference_filename=ref_fasta,format_options=[b"required_fields=7167"]))
         else:
             sys.stderr.write('Error: %s is not a valid alignment file (*.bam or *.cram)\n' % b)
             exit(1)
@@ -443,7 +447,7 @@ def sv_genotype(bam_string,
                 QR = int(split_weight * ref_seq) + int(disc_weight * ref_span)
                 QA = int(split_weight * alt_splitters) + int(disc_weight * alt_span)
                 gt_lplist = bayes_gt(QR, QA, is_dup)
-                best, second_best = sorted([ (i, e) for i, e in enumerate(gt_lplist) ], key=lambda(x): x[1], reverse=True)[0:2]
+                best, second_best = sorted([ (i, e) for i, e in enumerate(gt_lplist) ], key=lambda x: x[1], reverse=True)[0:2]
                 gt_idx = best[0]
 
                 # print log probabilities of homref, het, homalt
@@ -573,7 +577,7 @@ def main():
 def cli():
     try:
         sys.exit(main())
-    except IOError, e:
+    except IOError as e:
         if e.errno != 32:  # ignore SIGPIPE
             raise
 
